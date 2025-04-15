@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        font-family: sans-serif;
+        color: #fff;
+      }
+
+      /* Custom scrollbar */
+      textarea::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      textarea::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+      }
+
+      textarea::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #00bcd4, #01804f);
+        border-radius: 10px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+
+      textarea::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, #00363d, #001412);
+      }
+
+      body {
+        background: rgba(19, 25, 26, 0.1);
+        -webkit-app-region: drag;
+        transition: background 0.3s;
+      }
+
+      #topbar {
+        height: 30px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        background: #7c8aa7;
+        padding: 0 10px;
+      }
+
+      #close-btn {
+        width: 20px;
+        height: 20px;
+        border: none;
+        border-radius: 50%;
+        background: #00212e;
+        cursor: pointer;
+        -webkit-app-region: no-drag;
+      }
+
+      #close-btn:hover {
+        background: #000;
+      }
+
+      #note {
+        width: 100%;
+        height: calc(100% - 30px);
+        padding: 10px;
+        font-size: 16px;
+        color: #e7e7e7;
+        background: transparent;
+        border: none;
+        resize: none;
+        outline: none;
+        box-sizing: border-box;
+        -webkit-app-region: no-drag;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="topbar">
+      <button id="close-btn"></button>
+    </div>
+    <textarea id="note" placeholder="Write your note here..."></textarea>
+
+    <script>
+      const { ipcRenderer } = require("electron");
+
+      const note = document.getElementById("note");
+      const closeBtn = document.getElementById("close-btn");
+
+      // Load saved note on startup
+      note.value = localStorage.getItem("savedNote") || "";
+
+      // Save note on input
+      note.addEventListener("input", () => {
+        localStorage.setItem("savedNote", note.value);
+      });
+
+      // Close button
+      closeBtn.addEventListener("click", () => {
+        ipcRenderer.send("close-window");
+      });
+
+      // Background transitions
+      note.addEventListener("focus", () => {
+        document.body.style.background = "rgb(28, 29, 32)";
+      });
+
+      note.addEventListener("blur", () => {
+        document.body.style.background = "rgba(19, 25, 26, 0.1)";
+      });
+      note.addEventListener("keydown", (e) => {
+        // SHIFT + B → insert bullet point
+        if (e.shiftKey && e.key.toLowerCase() === "b") {
+          e.preventDefault();
+          insertAtCursor("• ");
+        }
+        if (e.key === "Enter") {
+          const start = note.selectionStart;
+          const textBefore = note.value.substring(0, start);
+          const currentLine = textBefore.split("\n").pop();
+      
+          if (currentLine.trim().startsWith("•")) {
+            e.preventDefault();
+            const textAfter = note.value.substring(note.selectionEnd);
+            const newValue = `${textBefore}\n• ${textAfter}`;
+            note.value = newValue;
+            note.selectionStart = note.selectionEnd = textBefore.length + 3;
+          }
+        }
+      });
+      
+      function insertAtCursor(text) {
+        const start = note.selectionStart;
+        const end = note.selectionEnd;
+        const before = note.value.substring(0, start);
+        const after = note.value.substring(end);
+        note.value = before + text + after;
+        note.selectionStart = note.selectionEnd = start + text.length;
+      }
+      
+    </script>
+  </body>
+</html>
