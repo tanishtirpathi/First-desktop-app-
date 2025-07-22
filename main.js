@@ -1,31 +1,44 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+// main.js
+const { app, BrowserWindow, ipcMain } = require("electron");
+const path = require("path");
+
+let mainWindow;
 
 function createWindow() {
-  const win = new BrowserWindow({
-    width: 300,
-    height: 400,
-    alwaysOnTop: true,
-    transparent: true,
-    frame: false,
+  mainWindow = new BrowserWindow({
+    width: 330,
+    height: 510,
     resizable: false,
+    frame: false,
+    transparent: true,
+    alwaysOnTop: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-    }
+    },
   });
 
-  win.loadFile(path.join(__dirname, 'index.html'));
+  mainWindow.loadFile(path.join(__dirname, "index.html"));
 
-  // Handle window close from renderer
-  const { ipcMain } = require('electron');
-  ipcMain.on('close-window', () => {
-    win.close();
-  });
+  // Optional: DevTools in development
+  if (process.env.NODE_ENV === "development") {
+    mainWindow.webContents.openDevTools({ mode: "detach" });
+  }
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  createWindow();
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
+  app.on("activate", () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
 });
+
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") app.quit();
+});
+
+// IPC listeners for window controls
+ipcMain.on("minimize-window", () => mainWindow.minimize());
+
+ipcMain.on("close-window", () => mainWindow.close());
