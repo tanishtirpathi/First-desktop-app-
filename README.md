@@ -1,131 +1,74 @@
-# ✅ Electron To-Do Checklist App
+# ✅ Jarvis Todo - Desktop Checklist App
 
-A **minimal yet powerful desktop to-do checklist app** built using **Electron**. Designed with a sleek dark-transparent UI and packed with intuitive features like auto checkbox handling, inline editing, and smooth transitions — this is your go-to productivity tool for clean, distraction-free task management.
-
-> 📌 Built for creators, developers, and anyone who wants a lightweight, elegant task experience — without the clutter.
-
----
-
-## 🌟 Features
-
-### 🎨 Aesthetic Dark UI  
-- Transparent, glassy look with soft shadows and animated blur effects.  
-- Focus-friendly — blends beautifully with your desktop.
-
-### ✅ Smart Checklist Logic  
-- Checkbox auto-inserts with `Shift + Enter`.  
-- `Enter` adds a normal new line.  
-- Checked tasks get auto-strikethrough and move to the bottom.  
-- Live checkbox sync even as you edit.
-
-### 📝 Fully Editable Task Area  
-- No separate input fields — your entire task list is a content-editable box.  
-- Add, reorder, or modify tasks naturally like writing in a notepad.
-
-### 🖋️ Rich Text Styling  
-- Font dropdown with aesthetic choices.  
-- Apply **bold**, *italic*, or _underline_ to selected words.  
-- Bullet point support with `Shift + B`.
-
-### 🌈 Attention to Detail  
-- Cute, custom scrollbars.  
-- Blur transitions on interaction.  
-- Lightweight and responsive — even with long task lists.
+A beautiful, distraction-free **Electron-based Todo Checklist** app with a sleek dark UI, animated transitions, smart timer, and interactive checkboxes.  
+Built for productivity lovers who want a fast and elegant desktop experience. 🧠✨
 
 ---
 
-## 🖼️ Preview
+## 📸 Screenshot
 
-> _Screenshot goes here_  
-> ![App Screenshot](./screenshot.png)
+![Jarvis Todo Preview](./screenshot.png)
 
 ---
 
-## ⚙️ Getting Started
+## 💡 Features
 
-### 1. Clone the Repo
+- ✅ **Editable rich-text checklist**
+- ☑️ **Checkbox toggle** with `Shift + Enter`
+- 🎯 Smart **reordering** (optional)
+- 🕒 **Built-in Timer** with Start/Pause/Reset
+- 🎨 **Font selector** (Inter, Roboto, Poppins, Georgia...)
+- 💾 **Autosave** task content & timer state
+- 🖼️ **Transparent, glassy dark UI** with blur
+- 📦 Minimalist & smooth UX (no delete clutter)
 
-```bash
-git clone https://github.com/your-username/electron-todo-checklist.git
-cd electron-todo-checklist
-2. Install Dependencies
-bash
-Copy
-Edit
+---
+
+## 🚀 Getting Started
+
+### 1. Clone this repository
+ Install Dependencies
+
 npm install
-3. Run the App in Dev Mode
-bash
-Copy
-Edit
+3. Run the App
 npm start
-4. Build for Production
-bash
-Copy
-Edit
+🛠️ Build the App (for production)
+To create a standalone executable (Windows/macOS/Linux):
 npm run build
-This will package your app for your operating system using Electron Forge.
+The final packaged .exe, .dmg, or AppImage will appear inside the dist/ folder.
 
-🧠 Keyboard Shortcuts
-Shortcut	Description
-Shift + Enter	Add new checkbox task
-Enter	Add normal line (no checkbox)
-Shift + B	Insert a bullet point (•)
-Ctrl + B/I/U	Apply bold, italic, underline
+🧩 Technologies Used
+Electron — Cross-platform desktop framework
 
-🗂️ Project Structure
+ JavaScript — Frontend logic (no frameworks)
+
+HTML5 + CSS3 — UI Layout and animations
+
+Node.js — Backend Runtime
+
+Electron Builder — For app packaging
+
+🎨 Customization Tips
+You can easily:
+
+Change fonts by editing index.html → <select id="font-selector">
+
+Adjust layout/blur/background from style.css
+
+Add support for themes, reminders, or syncing with file storage
+
+📁 Project Structure
 bash
 Copy
 Edit
-.
-├── main.js            # Electron main process (window setup)
-├── index.html         # Root HTML page
-├── style.css          # TailwindCSS-based dark aesthetic styles
-├── renderer.js        # UI logic, event handling
-├── fonts/             # Custom fonts
-├── assets/            # Icons, visuals
-├── package.json       # App metadata and scripts
-💻 Built With
-Tech	Description
-Electron	Cross-platform desktop apps with JavaScript
-HTML + CSS + JS	Core frontend technologies
-Tailwind CSS (optional)	Utility-first CSS framework
-LocalStorage	For saving your data locally (coming soon)
+├── index.html          # Main UI layout
+├── style.css           # UI styling and themes
+├── renderer.js         # Frontend logic (tasks, checkboxes, timer)
+├── main.js             # Electron window & IPC setup
+├── package.json        # Project metadata and scripts
+└── README.md           # Project documentation
 
-🚧 Upcoming Features
- Persistent data saving via LocalStorage or filesystem
 
- Theme customization (light/dark/system)
 
- Multi-list support (projects, tags)
-
- Daily/weekly task view
-
- Export to .txt or .pdf
-
-📜 License
-This project is licensed under the MIT License.
-
-🤝 Contributing
-Contributions, suggestions, and PRs are welcome!
-If you’ve got ideas to improve this app — feel free to fork and submit a pull request.
-For major changes, open an issue first to discuss what you’d like to change.
-
-🙋‍♂️ Author
-Made with 💻 by [Your Name]
-
-Designed for creators who love clean, calm digital spaces.
-
-yaml
-Copy
-Edit
-
----
-
-If you want, I can also:
-
-- ✅ Convert this to a downloadable file
-- 🎨 Add real screenshot/image placeholders
-- ⚙️ Customize it with your GitHub name or username
-- 🛠 Integrate license & badge icons
-
-Let me know bro, I got you covered 💯
+MIT License — Free for personal & commercial use.
+Made with ❤️ by Tanish Tirpathi
