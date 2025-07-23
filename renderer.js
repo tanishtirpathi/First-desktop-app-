@@ -30,72 +30,6 @@ fontSelector.addEventListener("change", (e) => {
   localStorage.setItem("selectedFont", font);
 });
 
-// ⌨️ Handle Enter / Shift+Enter key events for checkboxes
-taskEditor.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-
-    const selection = window.getSelection();
-    const range = selection.getRangeAt(0);
-    const container = range.startContainer;
-    const parentDiv = container.nodeType === 3 ? container.parentElement : container;
-    const currentLineText = parentDiv.textContent.trim();
-
-    const newLine = document.createElement("div");
-    newLine.classList.add("task-line");
-
-    if (e.shiftKey || currentLineText.startsWith("☐") || currentLineText.startsWith("☑")) {
-      newLine.textContent = "☐ ";
-    } else {
-      newLine.innerHTML = "<br>";
-    }
-
-    range.collapse(false);
-    range.insertNode(newLine);
-
-    const newRange = document.createRange();
-    newRange.setStart(newLine, 1);
-    newRange.collapse(true);
-    selection.removeAllRanges();
-    selection.addRange(newRange);
-  }
-});
-
-// 🖱️ Toggle checkbox state and reorder completed tasks
-taskEditor.addEventListener("click", (e) => {
-  const clickedLine = e.target.closest(".task-line");
-  if (!clickedLine) return;
-
-  const text = clickedLine.textContent.trim();
-
-  if (text.startsWith("☐")) {
-    clickedLine.textContent = text.replace("☐", "☑");
-    clickedLine.classList.add("completed");
-  } else if (text.startsWith("☑")) {
-    clickedLine.textContent = text.replace("☑", "☐");
-    clickedLine.classList.remove("completed");
-  }
-
-  // Reorder: unchecked on top, checked at bottom
-  const lines = Array.from(taskEditor.children);
-  const unchecked = [];
-  const checked = [];
-
-  lines.forEach((line) => {
-    const txt = line.textContent.trim();
-    if (txt.startsWith("☑")) {
-      line.classList.add("completed");
-      checked.push(line);
-    } else {
-      line.classList.remove("completed");
-      unchecked.push(line);
-    }
-  });
-
-  taskEditor.innerHTML = "";
-  [...unchecked, ...checked].forEach((line) => taskEditor.appendChild(line));
-});
-
 // 🪟 Handle minimize and close buttons
 document.getElementById("minimize-btn").addEventListener("click", () => {
   ipcRenderer.send("minimize-window");
@@ -184,4 +118,50 @@ resetBtn.addEventListener("click", () => {
 
   localStorage.removeItem("timerStart");
   localStorage.removeItem("timerElapsed");
+});
+//----------------------------------------------------------------------
+taskEditor.addEventListener("click", (e) => {
+  const clickedLine = e.target.closest(".task-line");
+  if (!clickedLine) return;
+
+  const text = clickedLine.textContent.trim();
+
+  if (text.startsWith("☐")) {
+    clickedLine.textContent = text.replace("☐", "☑");
+    clickedLine.classList.add("completed");
+  } else if (text.startsWith("☑")) {
+    clickedLine.textContent = text.replace("☑", "☐");
+    clickedLine.classList.remove("completed");
+  }
+});
+taskEditor.addEventListener("keydown", (e) => {
+  // ✅ SHIFT + Enter → Insert a new checkbox
+  if (e.key === "Enter" && e.shiftKey) {
+    e.preventDefault();
+
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+
+    const checkboxLine = document.createElement("div");
+    checkboxLine.classList.add("task-line");
+    checkboxLine.textContent = "☐ ";
+
+    const parent =
+      range.startContainer.nodeType === 3
+        ? range.startContainer.parentNode
+        : range.startContainer;
+
+    if (parent.nextSibling) {
+      parent.parentNode.insertBefore(checkboxLine, parent.nextSibling);
+    } else {
+      parent.parentNode.appendChild(checkboxLine);
+    }
+
+    // Set cursor inside the new line
+    const newRange = document.createRange();
+    newRange.setStart(checkboxLine.firstChild, checkboxLine.textContent.length);
+    newRange.collapse(true);
+    selection.removeAllRanges();
+    selection.addRange(newRange);
+  }
 });
