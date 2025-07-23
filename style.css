@@ -1,15 +1,16 @@
 :root {
-  --primary-bg: rgba(53, 49, 49, 0.6);
+  --primary-bg: rgba(45, 45, 55, 0.7);
   --secondary-bg: rgba(26, 26, 26, 0.3);
   --accent-blue: #00d4ff;
-  --accent-pink: #85002c;
+  --accent-pink: #c20047;
   --accent-green: #00ff88;
+  --accent-light: #ffc9f6;
 
   --text-primary: #ffffff;
-  --text-secondary: #bbbbbb;
+  --text-secondary: #cccccc;
   --danger: #ff4757;
   --warning: #ffa502;
-  --border: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.08);
 }
 
 * {
@@ -19,36 +20,139 @@
 }
 
 body {
+  margin: 0;
+  padding: 0;
   height: 100vh;
-  color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, var(--primary-bg), #1a1a2e);
-  backdrop-filter: blur(12px);
-  transition: all 0.4s ease;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+
+  font-family: "Inter", sans-serif;
+  color: var(--text-primary);
+  background: linear-gradient(145deg, var(--primary-bg), #0d0d0d);
+  backdrop-filter: blur(18px);
   -webkit-app-region: drag;
+
+  /* 👇 This line was the problem before */
+  overflow: hidden; /* ❌ REMOVE THIS LINE or REPLACE WITH overflow: auto */
 }
 
 body.blur-bg {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(30px);
 }
 
-/* Topbar with font selector */
+/* Topbar */
 #topbar {
-  height: 40px;
+  height: 42px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10px;
-  background: rgba(255, 0, 102, 0.1);
+  padding: 0 12px;
+  background: rgba(255, 0, 102, 0.05);
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(20px);
   -webkit-app-region: drag;
+  gap: 12px;
 }
 
+/* Left side: Font selector + Timer inline */
+.top-left-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Font Dropdown */
+#font-selector {
+  appearance: none;
+  background-image: linear-gradient(
+    145deg,
+    var(--accent-pink),
+    var(--accent-light)
+  );
+  color: black;
+  border: none;
+  padding: 4px 10px;
+  font-weight: 500;
+  font-size: 12px;
+  border-radius: 5px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  -webkit-app-region: no-drag;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+#font-selector:hover {
+  background-image: linear-gradient(145deg, #5f0023, #ffdce7);
+  box-shadow: 0 2px 6px rgba(255, 0, 102, 0.3);
+}
+
+/* Timer Box */
+#timer-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background-image: linear-gradient(
+    145deg,
+    var(--accent-pink),
+    var(--accent-light)
+  );
+  border-radius: 5px;
+  -webkit-app-region: no-drag;
+}
+
+/* Timer Text */
+#timer {
+  font-size: 12px;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  color: black;
+  user-select: none;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* Timer Button */
+#start-timer {
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  font-size: 11px;
+  color: black;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#start-timer:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Reset Timer */
+#reset-timer {
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  padding: 2px 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+#reset-timer:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+#reset-timer svg {
+  stroke: black;
+  width: 14px;
+  height: 14px;
+}
+
+/* Window Controls */
 .window-controls {
   display: flex;
   gap: 8px;
@@ -61,83 +165,114 @@ body.blur-bg {
   border-radius: 50%;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s ease;
 }
 
-.minimize-btn { background: var(--warning); }
-.maximize-btn { background: var(--accent-green); }
-.close-btn { background: var(--danger); }
+.minimize-btn {
+  background: var(--warning);
+}
+.maximize-btn {
+  background: var(--accent-green);
+}
+.close-btn {
+  background: var(--danger);
+}
 
 .control-btn:hover {
   transform: scale(1.2);
-  box-shadow: 0 0 8px currentColor;
+  box-shadow: 0 0 6px currentColor;
+}
+body.blur-bg {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(30px);
 }
 
-/* Font Selector on Left */
-#font-selector {
-  appearance: none;
-  background: rgba(255, 255, 255, 0.05);
-  color: rgb(0, 0, 0);
-  border: none;
-  padding: 6px 10px;
-  font-weight: 500;
-  border-radius: 10px;
-  background-image: linear-gradient(145deg, var(--accent-pink), #ffb6c1);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  -webkit-app-region: no-drag;
-}
-
-#font-selector:hover {
-  background-image: linear-gradient(145deg, #5f0023, #ffcedb);
-  box-shadow: 0 4px 12px rgba(255, 0, 102, 0.4);
-}
-
-/* Task input area - fullscreen below topbar */
+/* Editable Task Area */
 #task-container {
   flex: 1;
+  height: calc(100vh - 42px); /* Fill remaining space after topbar */
+  width: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
+
   font-size: 15px;
-  line-height: 1.6;
   font-family: inherit;
+  line-height: 1.6;
+
+  padding: 0 12px;
+  background: transparent;
   outline: none;
   border: none;
-  background: transparent;
+
   white-space: pre-wrap;
+  word-wrap: break-word;
   -webkit-app-region: no-drag;
-  padding: 10px 18px;
 }
 
-/* Scrollbar styling */
+/* Custom scrollbar */
 #task-container::-webkit-scrollbar {
   width: 6px;
 }
-
 #task-container::-webkit-scrollbar-track {
   background: transparent;
 }
-
 #task-container::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
 }
-
 #task-container::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Individual task line (clean, no borders now) */
+/* Task line */
 .task-line {
   padding: 2px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* Completed task style */
+/* Checkbox style */
+.task-line input[type="checkbox"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--accent-green);
+  border-radius: 4px;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.task-line input[type="checkbox"]:checked {
+  background: var(--accent-green);
+  box-shadow: 0 0 4px var(--accent-green);
+}
+.task-line input[type="checkbox"]:checked::after {
+  content: "✓";
+  color: black;
+  font-size: 12px;
+  position: absolute;
+  left: 2px;
+  top: -1px;
+}
+
+/* Completed task */
 .task-line.completed {
   text-decoration: line-through;
   opacity: 0.3;
+  transition: all 0.3s ease;
 }
 
-/* Animation */
+/* Fade animation */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

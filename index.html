@@ -10,9 +10,8 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- Topbar -->
     <div id="topbar">
-      <div style="margin: 10px 5px ; display: flex; justify-content: end">
+      <div class="top-left-group">
         <select id="font-selector">
           <option value="'Inter', sans-serif">Inter</option>
           <option value="'Roboto', sans-serif">Roboto</option>
@@ -20,6 +19,24 @@
           <option value="'Courier New', monospace">Courier</option>
           <option value="'Georgia', serif">Georgia</option>
         </select>
+
+        <div id="timer-box">
+          <div id="timer">00:00:00</div>
+          <button id="start-timer">▶</button>
+          <button id="reset-timer" title="Reset Timer">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <path d="M3.51 15a9 9 0 1 0-2.13-9.36L1 10"></path>
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div class="window-controls">
@@ -28,9 +45,6 @@
         <button class="control-btn close-btn" id="close-btn"></button>
       </div>
     </div>
-
-
-
     <!-- Editable Task Area -->
     <div
       id="task-container"
