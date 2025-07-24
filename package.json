@@ -1,17 +1,30 @@
-{
-  "name": "sticky-notes-app",
+ {
+  "name": "stark-notes",
   "version": "1.0.0",
   "main": "main.js",
+  "description": "A sleek Electron-based to-do app powered by Tanish tech ",
+  "author": "Tanish",
+  "license": "MIT",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "electron-builder"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "build": {
+    "appId": "com.tanish.todo",
+    "productName": "tanishtirpathi",
+    "files": [
+      "**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": "nsis"
+    }
+  },
   "devDependencies": {
-    "electron": "^35.1.5"
+    "electron": "^35.1.5",
+    "electron-builder": "^24.6.0"
   },
   "dependencies": {
     "electron-store": "^10.1.0",
