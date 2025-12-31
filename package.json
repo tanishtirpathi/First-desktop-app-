@@ -11,7 +11,7 @@
   },
   "build": {
     "appId": "com.tanish.todo",
-    "productName": "tanishtirpathi",
+    "productName": "stark-notes",
     "files": [
       "**/*"
     ],

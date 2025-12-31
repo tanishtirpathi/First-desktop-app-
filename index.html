@@ -3,15 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <title>Jarvis Todo</title>
+
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter&family=Roboto&family=Poppins&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto&family=Poppins&display=swap"
       rel="stylesheet"
     />
+
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
+    <!-- Top Bar -->
     <div id="topbar">
       <div class="top-left-group">
+        <span class="app-title">Stark Notes</span>
+
         <select id="font-selector">
           <option value="'Inter', sans-serif">Inter</option>
           <option value="'Roboto', sans-serif">Roboto</option>
@@ -19,24 +25,6 @@
           <option value="'Courier New', monospace">Courier</option>
           <option value="'Georgia', serif">Georgia</option>
         </select>
-
-        <div id="timer-box">
-          <div id="timer">00:00:00</div>
-          <button id="start-timer">▶</button>
-          <button id="reset-timer" title="Reset Timer">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="black"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <polyline points="1 4 1 10 7 10"></polyline>
-              <path d="M3.51 15a9 9 0 1 0-2.13-9.36L1 10"></path>
-            </svg>
-          </button>
-        </div>
       </div>
 
       <div class="window-controls">
@@ -45,15 +33,16 @@
         <button class="control-btn close-btn" id="close-btn"></button>
       </div>
     </div>
-    <!-- Editable Task Area -->
+
+    <!-- Task Editor -->
     <div
       id="task-container"
       contenteditable="true"
       spellcheck="false"
       class="task-editor"
+      placeholder="• Write your tasks here..."
     ></div>
 
-    <!-- Load renderer -->
     <script src="renderer.js"></script>
   </body>
 </html>
